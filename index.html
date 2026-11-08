@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GC Desarrollo Web | Portafolio</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Pantalla de carga para evitar destellos antes de recibir Firebase -->
+    <div id="loader-screen" class="loader-screen">
+        <div class="spinner"></div>
+        <p>Cargando interfaz...</p>
+    </div>
+
+    <!-- Banner de Aviso / Promo -->
+    <div id="promo-banner" class="promo-banner hidden">
+        <img id="promo-img" src="" alt="Promoción" class="promo-img hidden">
+        <span id="promo-text"></span>
+    </div>
+
+    <!-- Encabezado Principal -->
+    <header class="main-header" id="main-header">
+        <div class="logo-container">
+            <div class="logo-ring"></div>
+            <img id="logo-img" src="https://via.placeholder.com/120/000000/FFD700?text=GC" alt="Logo GC" class="logo-avatar">
+        </div>
+        <h1 id="author-name" class="brand-title">Gabriel Cruz</h1>
+        <p id="hero-description" class="hero-description">Transformá tu negocio con un sitio web profesional: barberías, turneros, gimnasios, tiendas online y más.</p>
+        
+        <!-- Botón principal destacado -->
+        <a id="btn-pedir-pagina" href="#" target="_blank" class="btn-main">Pedir mi página</a>
+
+        <!-- Botones dinámicos rápidos -->
+        <div id="fast-buttons-container" class="fast-buttons-container"></div>
+    </header>
+
+    <!-- Galería / Portafolio de Casillas -->
+    <main class="portfolio-container">
+        <h2 class="section-title">Trabajos y Ejemplos Realizados</h2>
+        <div id="cards-grid" class="cards-grid"></div>
+    </main>
+
+    <!-- Botón flotante de WhatsApp -->
+    <a id="btn-whatsapp" href="#" target="_blank" class="btn-whatsapp hidden">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Pie de página -->
+    <footer class="main-footer">
+        <p>&copy; <span id="year"></span> GC Desarrollo Web - Todos los derechos reservados.</p>
+        <button id="btn-open-login" class="lock-btn" title="Panel Admin">
+            <i class="fas fa-lock"></i>
+        </button>
+    </footer>
+
+    <!-- Modal de Autenticación -->
+    <div id="modal-auth" class="modal hidden">
+        <div class="modal-content auth-card">
+            <span class="close-btn" id="close-auth">&times;</span>
+            <h3>Acceso Administrador</h3>
+            <form id="form-login">
+                <input type="email" id="auth-email" placeholder="Correo electrónico" required>
+                <input type="password" id="auth-pass" placeholder="Contraseña" required>
+                <button type="submit" class="btn-submit">Ingresar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Panel de Administración -->
+    <div id="modal-admin" class="modal hidden">
+        <div class="modal-content admin-panel">
+            <div class="admin-header">
+                <h2>Panel de Control GC</h2>
+                <button id="btn-logout" class="btn-logout">Cerrar Sesión</button>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="tab-header">Encabezado y Marca</button>
+                <button class="tab-btn" data-tab="tab-cards">Casillas (Trabajos)</button>
+                <button class="tab-btn" data-tab="tab-links">Botones Rápidos</button>
+                <button class="tab-btn" data-tab="tab-styles">Estilos y Ajustes</button>
+                <button class="tab-btn" data-tab="tab-promo">Aviso / Promo</button>
+            </div>
+
+            <div class="tab-content">
+                <!-- Tab Encabezado -->
+                <div id="tab-header" class="tab-pane active">
+                    <h3>Encabezado</h3>
+                    <label>URL del Logo (Imagen):</label>
+                    <input type="url" id="edit-logo-url">
+                    <label>Nombre Principal:</label>
+                    <input type="text" id="edit-author-name">
+                    <label>Descripción / Propuesta de Valor:</label>
+                    <textarea id="edit-hero-desc" rows="3"></textarea>
+                    <label>Texto Botón "Pedir Mi Página":</label>
+                    <input type="text" id="edit-main-btn-text">
+                    <label>Link Botón "Pedir Mi Página":</label>
+                    <input type="url" id="edit-main-btn-link">
+                    <button id="save-header-btn" class="btn-save">Guardar Cambios</button>
+                </div>
+
+                <!-- Tab Casillas -->
+                <div id="tab-cards" class="tab-pane">
+                    <h3 id="card-form-title">Agregar Nueva Casilla (Trabajo/Demo)</h3>
+                    <form id="form-card">
+                        <input type="hidden" id="card-edit-id">
+                        <input type="text" id="card-title" placeholder="Título de la página/negocio" required>
+                        <textarea id="card-desc" placeholder="Descripción corta del proyecto" rows="2" required></textarea>
+                        <input type="url" id="card-img" placeholder="URL de la Imagen de muestra" required>
+                        <input type="url" id="card-link" placeholder="Link de destino de la demo" required>
+                        <div class="form-btn-group">
+                            <button type="submit" id="card-submit-btn" class="btn-add">Crear Casilla</button>
+                            <button type="button" id="card-cancel-btn" class="btn-cancel hidden">Cancelar Edición</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <h3>Casillas Existentes</h3>
+                    <div id="admin-cards-list" class="admin-list"></div>
+                </div>
+
+                <!-- Tab Botones Rápidos -->
+                <div id="tab-links" class="tab-pane">
+                    <h3 id="link-form-title">Agregar Botón de Enlace</h3>
+                    <form id="form-link">
+                        <input type="hidden" id="link-edit-idx" value="-1">
+                        <input type="text" id="link-label" placeholder="Nombre del Botón (Ej: Ver Servicios)" required>
+                        <input type="url" id="link-url" placeholder="URL de Destino" required>
+                        <div class="form-btn-group">
+                            <button type="submit" id="link-submit-btn" class="btn-add">Agregar Botón</button>
+                            <button type="button" id="link-cancel-btn" class="btn-cancel hidden">Cancelar Edición</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <h3>Botones Existentes</h3>
+                    <div id="admin-links-list" class="admin-list"></div>
+                </div>
+
+                <!-- Tab Estilos -->
+                <div id="tab-styles" class="tab-pane">
+                    <h3>Fondo e Imagen de Fondo</h3>
+                    <label>URL de Imagen de Fondo de Página (opcional):</label>
+                    <input type="url" id="edit-bg-image-url" placeholder="https://ejemplo.com/fondo.jpg">
+                    
+                    <hr>
+                    <h3>Personalización de Colores</h3>
+                    <div class="color-pickers-grid">
+                        <div>
+                            <label>Fondo de Página (Color):</label>
+                            <input type="color" id="clr-bg" value="#0a0a0a">
+                        </div>
+                        <div>
+                            <label>Fondo Encabezado:</label>
+                            <input type="color" id="clr-header" value="#121212">
+                        </div>
+                        <div>
+                            <label>Color Principal (Dorado/Detalles):</label>
+                            <input type="color" id="clr-primary" value="#d4af37">
+                        </div>
+                        <div>
+                            <label>Texto Principal:</label>
+                            <input type="color" id="clr-text" value="#ffffff">
+                        </div>
+                        <div>
+                            <label>Fondo de Casillas:</label>
+                            <input type="color" id="clr-card-bg" value="#1a1a1a">
+                        </div>
+                        <div>
+                            <label>Borde/Marco de Casillas:</label>
+                            <input type="color" id="clr-card-border" value="#d4af37">
+                        </div>
+                        <div>
+                            <label>Fondo Botones:</label>
+                            <input type="color" id="clr-btn-bg" value="#d4af37">
+                        </div>
+                        <div>
+                            <label>Texto Botones:</label>
+                            <input type="color" id="clr-btn-text" value="#000000">
+                        </div>
+                    </div>
+                    <hr>
+                    <h3>Contacto WhatsApp</h3>
+                    <label>Número de WhatsApp (con código de país, Ej: 549381XXXXXXX):</label>
+                    <input type="text" id="edit-whatsapp-num">
+                    <button id="save-styles-btn" class="btn-save">Guardar Estilos y Ajustes</button>
+                </div>
+
+                <!-- Tab Promo -->
+                <div id="tab-promo" class="tab-pane">
+                    <h3>Aviso / Promoción Superior</h3>
+                    <label>
+                        <input type="checkbox" id="edit-promo-active"> Activar Banner de Promo
+                    </label>
+                    <label>Texto del Aviso:</label>
+                    <input type="text" id="edit-promo-text" placeholder="Ej: ¡10% de descuento en webs para barberías esta semana!">
+                    <label>URL de Imagen del Aviso (opcional):</label>
+                    <input type="url" id="edit-promo-img">
+                    <button id="save-promo-btn" class="btn-save">Guardar Promo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="gaby.js"></script>
+</body>
+</html>

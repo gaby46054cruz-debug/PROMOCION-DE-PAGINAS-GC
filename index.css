@@ -1,0 +1,490 @@
+:root {
+    --bg-color: #0a0a0a;
+    --bg-image: none;
+    --header-bg: #121212;
+    --primary-color: #d4af37;
+    --text-color: #ffffff;
+    --card-bg: #1a1a1a;
+    --card-border: #d4af37;
+    --btn-bg: #d4af37;
+    --btn-text: #000000;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body {
+    background-color: var(--bg-color);
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Pantalla Loader de Entrada */
+.loader-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: var(--primary-color);
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(212, 175, 55, 0.2);
+    border-top: 5px solid #d4af37;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Banner de Aviso */
+.promo-banner {
+    background-color: var(--primary-color);
+    color: var(--btn-text);
+    text-align: center;
+    padding: 10px 15px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.promo-img {
+    max-height: 30px;
+    border-radius: 4px;
+}
+
+/* Encabezado Principal */
+.main-header {
+    background-color: var(--header-bg);
+    padding: 40px 20px 30px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.logo-container {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 2;
+    border: 3px solid var(--bg-color);
+}
+
+/* Anillo 3D / Efecto Giratorio al rededor del logo */
+.logo-ring {
+    position: absolute;
+    width: 126px;
+    height: 126px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: var(--primary-color);
+    border-bottom-color: var(--primary-color);
+    animation: rotateRing 3s linear infinite;
+    z-index: 1;
+}
+
+@keyframes rotateRing {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.05); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.brand-title {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.hero-description {
+    max-width: 600px;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.btn-main {
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 30px;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    margin-bottom: 20px;
+}
+
+.btn-main:hover {
+    transform: translateY(-2deg);
+    filter: brightness(1.1);
+}
+
+/* Botones Rápidos */
+.fast-buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.btn-fast {
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.btn-fast:hover {
+    background-color: var(--primary-color);
+    color: var(--btn-text);
+}
+
+/* Portafolio y Grid */
+.portfolio-container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+}
+
+.section-title {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 30px;
+    font-size: 1.5rem;
+}
+
+/* Adaptabilidad Grid: 2 columnas en celular, auto-fill en PC */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+@media (min-width: 768px) {
+    .cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+    }
+}
+
+.card-item {
+    background-color: var(--card-bg);
+    border: 1.5px solid var(--card-border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.card-item:hover {
+    transform: translateY(-4deg);
+}
+
+.card-img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--card-border);
+}
+
+@media (min-width: 768px) {
+    .card-img {
+        height: 180px;
+    }
+}
+
+.card-info {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.card-info h4 {
+    color: var(--primary-color);
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
+
+.card-info p {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    line-height: 1.3;
+}
+
+/* Botón flotante WhatsApp */
+.btn-whatsapp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25d366;
+    color: white;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    z-index: 100;
+    text-decoration: none;
+}
+
+/* Footer y Candado Admin */
+.main-footer {
+    background-color: var(--header-bg);
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+}
+
+.lock-btn {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    background: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.lock-btn:hover {
+    opacity: 1;
+}
+
+/* Modales */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 15px;
+}
+
+.modal-content {
+    background-color: #1a1a1a;
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    color: white;
+}
+
+.admin-panel {
+    max-width: 800px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+.auth-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    background-color: #0a0a0a;
+    color: white;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+
+.btn-submit, .btn-save, .btn-add {
+    background-color: var(--primary-color);
+    color: black;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.form-btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-cancel {
+    background-color: #555;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.btn-logout {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Tabs Panel */
+.admin-tabs {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    border-bottom: 1px solid #333;
+    margin-bottom: 15px;
+}
+
+.tab-btn {
+    background: transparent;
+    border: none;
+    color: #888;
+    padding: 8px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+.color-pickers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.admin-list-item {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit {
+    background-color: var(--primary-color);
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-delete {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
